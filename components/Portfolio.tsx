@@ -23,7 +23,7 @@ const projects = [
 
 export default function Portfolio() {
   return (
-    <section id="portfolio" className="py-24 px-[clamp(20px,5vw,80px)] bg-white">
+    <section id="projects" className="py-24 px-[clamp(20px,5vw,80px)] bg-white">
       <div className="max-w-[1080px] mx-auto">
         <span className="text-[11px] font-semibold tracking-[2px] uppercase text-accent mb-4 block">
           Projects

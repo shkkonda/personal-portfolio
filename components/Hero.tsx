@@ -1,3 +1,14 @@
+"use client";
+
+function scrollTo(e: React.MouseEvent<HTMLAnchorElement>, sectionId: string, path: string) {
+  e.preventDefault();
+  const el = document.getElementById(sectionId);
+  if (el) {
+    el.scrollIntoView({ behavior: "smooth" });
+    window.history.pushState(null, "", path);
+  }
+}
+
 export default function Hero() {
   return (
     <section
@@ -32,13 +43,15 @@ export default function Hero() {
 
           <div className="hero-stagger-4 flex gap-4 flex-wrap">
             <a
-              href="#contact"
+              href="/contact"
+              onClick={(e) => scrollTo(e, "contact", "/contact")}
               className="inline-block px-8 py-3.5 bg-ink text-paper text-[13px] font-semibold tracking-wider rounded-md hover:bg-accent transition-colors no-underline"
             >
               Get in Touch
             </a>
             <a
-              href="#portfolio"
+              href="/projects"
+              onClick={(e) => scrollTo(e, "projects", "/projects")}
               className="inline-block px-8 py-3.5 bg-transparent text-ink text-[13px] font-semibold tracking-wider rounded-md border-[1.5px] border-light hover:border-ink transition-colors no-underline"
             >
               View Work

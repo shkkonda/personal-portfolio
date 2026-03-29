@@ -1,13 +1,14 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
+import Image from "next/image";
 
 const links = [
-  { href: "#about", label: "About" },
-  { href: "#experience", label: "Experience" },
-  { href: "#portfolio", label: "Projects" },
-  { href: "#blog", label: "Blog" },
-  { href: "#contact", label: "Contact" },
+  { href: "/about", sectionId: "about", label: "About" },
+  { href: "/experience", sectionId: "experience", label: "Experience" },
+  { href: "/projects", sectionId: "projects", label: "Projects" },
+  { href: "/blog", sectionId: "blog", label: "Blog" },
+  { href: "/contact", sectionId: "contact", label: "Contact" },
 ];
 
 export default function Navbar() {
@@ -20,6 +21,25 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  const scrollTo = useCallback(
+    (e: React.MouseEvent<HTMLAnchorElement>, sectionId: string, path: string) => {
+      e.preventDefault();
+      const el = document.getElementById(sectionId);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth" });
+        window.history.pushState(null, "", path);
+      }
+      setOpen(false);
+    },
+    []
+  );
+
+  const scrollToTop = useCallback((e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    window.history.pushState(null, "", "/");
+  }, []);
+
   return (
     <nav
       className={`fixed top-0 left-0 w-full z-50 px-[clamp(20px,5vw,80px)] py-5 flex justify-between items-center transition-all duration-300 ${
@@ -28,11 +48,8 @@ export default function Navbar() {
           : ""
       }`}
     >
-      <a
-        href="#hero"
-        className="font-serif text-xl text-ink no-underline tracking-tight"
-      >
-        SK
+      <a href="/" onClick={scrollToTop} className="no-underline">
+        <Image src="/logo.svg" alt="Shriharsha Konda" width={36} height={36} />
       </a>
 
       <ul className="hidden md:flex gap-8 list-none">
@@ -40,6 +57,7 @@ export default function Navbar() {
           <li key={l.href}>
             <a
               href={l.href}
+              onClick={(e) => scrollTo(e, l.sectionId, l.href)}
               className="text-mid text-[13px] font-medium uppercase tracking-wider hover:text-ink transition-colors no-underline"
             >
               {l.label}
@@ -64,7 +82,7 @@ export default function Navbar() {
             <li key={l.href}>
               <a
                 href={l.href}
-                onClick={() => setOpen(false)}
+                onClick={(e) => scrollTo(e, l.sectionId, l.href)}
                 className="text-mid text-[13px] font-medium uppercase tracking-wider hover:text-ink transition-colors no-underline"
               >
                 {l.label}

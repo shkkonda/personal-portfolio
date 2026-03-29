@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import ScrollReveal from "@/components/ScrollReveal";
 
 export const metadata: Metadata = {
   title: "Shriharsha Konda — Data & AI",
@@ -27,7 +30,10 @@ export default function RootLayout({
         />
       </head>
       <body className="bg-paper text-ink font-sans text-base leading-relaxed font-light">
-        {children}
+        <Navbar />
+        <main>{children}</main>
+        <Footer />
+        <ScrollReveal />
       </body>
     </html>
   );
