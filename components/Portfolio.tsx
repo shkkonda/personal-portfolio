@@ -14,14 +14,6 @@ const query = `*[_type == "project"] | order(order asc){
 
 const fallbackProjects: Project[] = [
   {
-    _id: "fp-1",
-    title: "AI Framework Finder",
-    description:
-      "An AI-powered recommendation engine that helps developers choose the right agentic AI framework for their project. Built with Streamlit and Gemini.",
-    tags: ["Python", "Streamlit", "Gemini AI"],
-    url: "https://github.com/shkkonda",
-  },
-  {
     _id: "fp-2",
     title: "Solana Portfolio Tracker",
     description:
