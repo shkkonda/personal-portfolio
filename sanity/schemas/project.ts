@@ -25,6 +25,12 @@ export default defineType({
       of: [{ type: "string" }],
     }),
     defineField({
+      name: "url",
+      title: "Project URL",
+      type: "url",
+      description: "Link to the live project or repository",
+    }),
+    defineField({
       name: "order",
       title: "Display Order",
       type: "number",

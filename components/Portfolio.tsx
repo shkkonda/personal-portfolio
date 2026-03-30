@@ -5,10 +5,11 @@ type Project = {
   title: string;
   description: string;
   tags: string[];
+  url?: string;
 };
 
 const query = `*[_type == "project"] | order(order asc){
-  _id, title, description, tags
+  _id, title, description, tags, url
 }`;
 
 const fallbackProjects: Project[] = [
@@ -18,6 +19,7 @@ const fallbackProjects: Project[] = [
     description:
       "An AI-powered recommendation engine that helps developers choose the right agentic AI framework for their project. Built with Streamlit and Gemini.",
     tags: ["Python", "Streamlit", "Gemini AI"],
+    url: "https://github.com/shkkonda",
   },
   {
     _id: "fp-2",
@@ -25,6 +27,7 @@ const fallbackProjects: Project[] = [
     description:
       "A tool for checking portfolio value on the Solana blockchain. Enter a wallet\u2019s public key and get a real-time breakdown of holdings.",
     tags: ["Solana", "Python", "Web3"],
+    url: "https://github.com/shkkonda",
   },
   {
     _id: "fp-3",
@@ -32,13 +35,7 @@ const fallbackProjects: Project[] = [
     description:
       "Compare tax liability under 44ADA (freelancer) vs salaried employment under India\u2019s new tax regime. Built for professionals exploring contract work.",
     tags: ["Streamlit", "Finance", "India Tax"],
-  },
-  {
-    _id: "fp-4",
-    title: "Overture Maps POI Explorer",
-    description:
-      "Commercial product exploration built on Overture Maps Foundation POI data. Geospatial data visualization and analysis for location intelligence.",
-    tags: ["Geospatial", "Data", "Maps"],
+    url: "https://github.com/shkkonda",
   },
 ];
 
@@ -68,28 +65,43 @@ export default async function Portfolio() {
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {projects.map((p) => (
-            <div
-              key={p._id}
-              className="reveal border border-light rounded-[10px] p-9 transition-all duration-300 hover:border-accent hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(0,0,0,0.06)]"
-            >
-              <div className="w-8 h-[3px] bg-accent rounded-sm mb-5" />
-              <div className="font-serif text-xl mb-2.5">{p.title}</div>
-              <div className="text-sm text-mid leading-relaxed mb-4">
-                {p.description}
+          {projects.map((p) => {
+            const Card = (
+              <div
+                className="reveal border border-light rounded-[10px] p-9 transition-all duration-300 hover:border-accent hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(0,0,0,0.06)] h-full"
+              >
+                <div className="w-8 h-[3px] bg-accent rounded-sm mb-5" />
+                <div className="font-serif text-xl mb-2.5">{p.title}</div>
+                <div className="text-sm text-mid leading-relaxed mb-4">
+                  {p.description}
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {p.tags?.map((t) => (
+                    <span
+                      key={t}
+                      className="text-[11px] font-medium px-3 py-1 bg-accent-soft text-accent rounded-full tracking-wider"
+                    >
+                      {t}
+                    </span>
+                  ))}
+                </div>
               </div>
-              <div className="flex flex-wrap gap-2">
-                {p.tags?.map((t) => (
-                  <span
-                    key={t}
-                    className="text-[11px] font-medium px-3 py-1 bg-accent-soft text-accent rounded-full tracking-wider"
-                  >
-                    {t}
-                  </span>
-                ))}
-              </div>
-            </div>
-          ))}
+            );
+
+            return p.url ? (
+              <a
+                key={p._id}
+                href={p.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="no-underline text-inherit"
+              >
+                {Card}
+              </a>
+            ) : (
+              <div key={p._id}>{Card}</div>
+            );
+          })}
         </div>
       </div>
     </section>
