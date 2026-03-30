@@ -76,7 +76,7 @@ export default async function Blog() {
           {posts.map((post) => (
             <a
               key={post._id}
-              href={`/${post.slug.current}`}
+              href={`/blog/${post.slug.current}`}
               className="reveal block p-8 border border-light rounded-[10px] no-underline text-inherit transition-all duration-300 hover:border-accent hover:-translate-y-1 hover:shadow-[0_12px_40px_rgba(0,0,0,0.06)]"
             >
               <div className="text-xs text-mid tracking-wider mb-3">
