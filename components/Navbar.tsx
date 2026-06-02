@@ -23,9 +23,12 @@ export default function Navbar() {
 
   const scrollTo = useCallback(
     (e: React.MouseEvent<HTMLAnchorElement>, sectionId: string, path: string) => {
-      e.preventDefault();
       const el = document.getElementById(sectionId);
+      // Only intercept when the section exists on the current page (home).
+      // On other pages (e.g. a blog post), let the link navigate normally —
+      // the rewrite serves the home page and ScrollManager scrolls into place.
       if (el) {
+        e.preventDefault();
         el.scrollIntoView({ behavior: "smooth" });
         window.history.pushState(null, "", path);
       }
@@ -35,9 +38,12 @@ export default function Navbar() {
   );
 
   const scrollToTop = useCallback((e: React.MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault();
-    window.scrollTo({ top: 0, behavior: "smooth" });
-    window.history.pushState(null, "", "/");
+    // Only smooth-scroll when we're already on the home page.
+    if (document.getElementById("hero")) {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      window.history.pushState(null, "", "/");
+    }
   }, []);
 
   return (
